@@ -1,6 +1,4 @@
-/* Hi, my name is Perrakis Stylianos R.N.:2401.I managed to do a Convolution Process on C within the course of the subject,
-briefly is that it is using 3 files at ".txt" form one of them is impulse response'h.txt' usually is called filter, the
-second one is our signal 'signal.txt' and the other is our output 'Output.txt'.I hope you enjoy!!!*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "koolplot.h"
@@ -60,7 +58,7 @@ int main()
             //  printf("%d",j);
         }
         // printf("==%d==",j);
-        if((j)%2==0)                     // This statement in order to continue you had to put in the file odd number of elements in filter file,you have to have a middle element as our Professor told us
+        if((j)%2==0)                     
         {
             printf("\n\t\t     PROSOXH!!!\n Prepei na balleis perrito arithmo gia thn kroustikh apokrish\n");
             fclose(file);
@@ -93,9 +91,9 @@ int main()
         }
     }
     convole (buffer,filter,i,j); //Calling The Function that makes the Convolution it has 4 arguments the arrays and the size of each one
-    fclose(file);               //Closing the files as a gentleman :)
+    fclose(file);               
     fclose(file2);
-    free(filter);              //Free the spaces we created because its our duty to do it and then We are free to go :)
+    free(filter);             
     free(buffer);
     return 0;
 }
@@ -142,5 +140,5 @@ void WriteResult(float *o,int n)
     {
         fprintf(f,"%f\n",o[i]);    //We writing the array into the file
     }
-    fclose(f);                      //Last but not least, we closing the file,before exiting
+    fclose(f);                     
 }
