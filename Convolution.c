@@ -19,8 +19,8 @@ int main()
         {
             i++;
         }
-        buffer=calloc(i,sizeof(float)); //Creates free space that our signal will be stored and puts 0 to free spaces
-        if( buffer==NULL)               //If it cannot create space in the memory then it ends the task
+        buffer=calloc(i,sizeof(float));
+        if( buffer==NULL)             
         {
             printf("Out of Memory");
             fclose(file);
@@ -28,9 +28,9 @@ int main()
         }
         i=0;
         rewind(file);
-        while(fscanf(file,"%f",&o)==1)     //When it has no elements to scan it will return 0 and stop the loop
+        while(fscanf(file,"%f",&o)==1)     
         {
-            buffer[i]=o;                    //insert our elements into the array we created dynamically
+            buffer[i]=o;                    
             i++;
         }
         printf("======This is our Signal:=======\n");   //Printing our Signal to be more friendly to user
@@ -41,8 +41,8 @@ int main()
 
     }
 //==========================Impulse response file Handling==========================//
-    FILE* file2=fopen("h.txt","r"); //Creating a pointer who's pointing at the start of our file
-    if(file2==NULL) //Checking about input files,if pointer is Null then something goes wrong
+    FILE* file2=fopen("h.txt","r"); 
+    if(file2==NULL) 
     {
         printf("Check files possibly Missing!");
         fclose(file);
@@ -51,7 +51,7 @@ int main()
     }
     else
     {
-        while(fscanf(file2,"%f",&o)==1)    //Calculating the Number of the elements in the input file
+        while(fscanf(file2,"%f",&o)==1) //Calculating the Number of the elements in the input file
         {
 
             j++;
@@ -64,33 +64,33 @@ int main()
             fclose(file);
             fclose(file2);
             free(buffer);
-            exit(1);                    //Else exits so changes have to be done&& free the space we allocated
+            exit(1);                    
         }
-        filter=calloc(j,sizeof(float)); //Creates free space that our signal will be stored and puts 0 to free spaces
-        if(filter==NULL)               //If system not allowed to create space in the memory then it ends the task
+        filter=calloc(j,sizeof(float)); 
+        if(filter==NULL)               
         {
             printf("Out of Memory");
             fclose(file);
             fclose(file2);
             free(buffer);
-            exit(1);                  //So again it Exits,After the user informed what's going on
+            exit(1);                  
         }
 
-        rewind(file2); //Opening again the file again to reset the pointer at the Start of the file..
-        j=0;                            // Re-declare th j in manage to have Access to the 0 box of the array we created before
+        rewind(file2);
+        j=0;                            
 
-        while(fscanf(file2,"%f",&o)==1)   //When it has no elements to scan it will return 0 and stop the loop
+        while(fscanf(file2,"%f",&o)==1)  
         {
-            filter[j]=o;                  //Insert our elements into the array we created dynamically
+            filter[j]=o;                  
             j++;
         }
-        printf("\n======Auto einai to filtro mas:======\n");//Printing our Signal to be more friendly to user
+        printf("\n======Auto einai to filtro mas:======\n");
         for(ip=0; ip<j; ip++)
         {
             printf("%f\n",filter[ip]);
         }
     }
-    convole (buffer,filter,i,j); //Calling The Function that makes the Convolution it has 4 arguments the arrays and the size of each one
+    convole (buffer,filter,i,j);
     fclose(file);               
     fclose(file2);
     free(filter);             
@@ -102,15 +102,15 @@ int convole(float *x,float *h,int cf,int ch)
 {
     int sout,j,i,k;
     float *o,calc;
-    sout=cf+ch-1;                  //Calculating the number of output values
+    sout=cf+ch-1;                 
 
-    o=calloc(sout,sizeof(float)); //Allocating enough space for the output
-    if(o==NULL)                   //If its not allowed then Printing in the screen Message and the returns 0 to end the Function and free the memory we allocated early
+    o=calloc(sout,sizeof(float)); 
+    if(o==NULL)                 
     {
         printf("Memory Error!");
         return 0;
     }
-    printf("\n========This is our output======"); //Printing message before loop in manage to get when it is finished
+    printf("\n========This is our output======");
     for (i=0; i<sout; i++)
     {
         k=i;
@@ -119,26 +119,26 @@ int convole(float *x,float *h,int cf,int ch)
         {
             if(k>=0&&k<cf)
             {
-                calc=calc+(x[k]*h[j]); //Here it makes the convolution calculations
+                calc=calc+(x[k]*h[j]); 
             }
             k--;
-            o[i]=calc;              //Putting values in the array
+            o[i]=calc;              
         }
-        printf("\n%f",o[i]);        //Printing our Matrix that contains our output
+        printf("\n%f",o[i]);        
     }
-    WriteResult(o,sout);            //Calling Void WriteResult with arguments the array,length of him because we want to pass it in the output file
-    free(o);                        //Freeing o no more needed
-    return 0;                        //Return 0, i managed to do it int this function and not void because of line 102 when i cant allocate i have to free the ones i allocated before
+    WriteResult(o,sout);            
+    free(o);                       
+    return 0;                       
 }
 //==========================Write-Result==========================//
 void WriteResult(float *o,int n)
 {
     int i;
     FILE *f;
-    f=fopen("Output.txt","w");      //Opening the file OR creating it thats the point of "w"
+    f=fopen("Output.txt","w");      
     for(i=0; i<n; i++)
     {
-        fprintf(f,"%f\n",o[i]);    //We writing the array into the file
+        fprintf(f,"%f\n",o[i]);   
     }
     fclose(f);                     
 }
